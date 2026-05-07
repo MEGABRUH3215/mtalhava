@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hava Durumu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background" id="background">
+    <div class="gradient-sphere" id="gradientSphere"></div>
+    <div class="particles" id="particles"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <div class="header-top">
+        <h1 class="logo"><i class="fas fa-cloud-sun"></i> Hava Durumu</h1>
+        <div class="header-actions">
+          <button class="btn-icon" id="themeToggle" title="Tema değiştir">
+            <i class="fas fa-moon"></i>
+          </button>
+          <button class="btn-icon" id="geoBtn" title="Konumumu bul">
+            <i class="fas fa-location-dot"></i>
+          </button>
+        </div>
+      </div>
+      <div class="search-container">
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Şehir adı girin..." autocomplete="off">
+          <button class="btn-search" id="searchBtn">Ara</button>
+        </div>
+        <div class="suggestions" id="suggestions"></div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"><span></span><span></span><span></span><span></span></div>
+        <p>Hava durumu yükleniyor...</p>
+      </div>
+
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorText">Bir hata oluştu. Lütfen tekrar deneyin.</span>
+        <button class="btn-retry" id="retryBtn">Tekrar Dene</button>
+      </div>
+
+      <section class="current-weather" id="currentWeather">
+        <div class="current-main">
+          <div class="location-info">
+            <h2 class="city-name" id="cityName">--</h2>
+            <p class="date-time" id="dateTime">--</p>
+          </div>
+          <div class="weather-primary">
+            <div class="temp-container">
+              <span class="temperature" id="temperature">--</span>
+              <span class="temp-unit">°C</span>
+            </div>
+            <div class="condition-container">
+              <img class="weather-icon" id="weatherIcon" src="" alt="">
+              <span class="condition-text" id="conditionText">--</span>
+            </div>
+          </div>
+          <div class="feels-like">
+            <i class="fas fa-temperature-half"></i>
+            Hissedilen: <span id="feelsLike">--</span>°C
+          </div>
+        </div>
+
+        <div class="current-details">
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-droplet"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="humidity">--</span>
+              <span class="detail-label">Nem</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-wind"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="windSpeed">--</span>
+              <span class="detail-label">Rüzgar</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-compass"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="windDir">--</span>
+              <span class="detail-label">Yön</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-gauge-high"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="pressure">--</span>
+              <span class="detail-label">Basınç</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-eye"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="visibility">--</span>
+              <span class="detail-label">Görüş</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-sun"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="uvIndex">--</span>
+              <span class="detail-label">UV İndeksi</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-sunrise"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="sunrise">--</span>
+              <span class="detail-label">Gün Doğumu</span>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-sunset"></i></div>
+            <div class="detail-info">
+              <span class="detail-value" id="sunset">--</span>
+              <span class="detail-label">Gün Batımı</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hourly-section" id="hourlySection">
+        <div class="section-header">
+          <h3><i class="fas fa-clock"></i> Saatlik Tahmin</h3>
+          <div class="hourly-nav">
+            <button class="btn-nav" id="hourlyPrev"><i class="fas fa-chevron-left"></i></button>
+            <button class="btn-nav" id="hourlyNext"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="hourly-scroll" id="hourlyScroll">
+          <!-- Hourly items injected by JS -->
+        </div>
+      </section>
+
+      <section class="daily-section" id="dailySection">
+        <div class="section-header">
+          <h3><i class="fas fa-calendar-days"></i> 7 Günlük Tahmin</h3>
+        </div>
+        <div class="daily-list" id="dailyList">
+          <!-- Daily items injected by JS -->
+        </div>
+      </section>
+
+      <div class="footer-info">
+        <p>Open-Meteo &amp; OpenStreetMap API kullanılarak oluşturulmuştur</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
